@@ -1,0 +1,2 @@
+int a __attribute__((instrument(0))) = 1;
+int b __attribute__((instrument(1))) = 100;
