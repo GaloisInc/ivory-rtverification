@@ -20,7 +20,7 @@ Install the GCC plugin:
     > make test
 
 This should result in some sample output from an instrumented program.  Read
-[GCC-Plugin/README.md](GCC-Plugin/README.md) for more information about building
+[gcc-plugin/README.md](gcc-plugin/README.md) for more information about building
 and testing the plugin.
 
 For cross-compilers, the plugin can be generated with a compiler on the host
