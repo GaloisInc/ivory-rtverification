@@ -1,6 +1,6 @@
 name:                rtv-example
 version:             0.1.0.0
-author:              Galois, Inc.
+author:              Galois, Inc. (Erlend Hamberg, Lee Pike)
 maintainer:          leepike@galois.com
 category:            Language
 build-type:          Simple
