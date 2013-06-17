@@ -6,7 +6,7 @@
 ifneq ($(EXPLICIT32),)
 	CC = gcc
 else
-	CC = gcc
+	CC = g++
 endif
 EXPLICIT32 ?=
 TARGET_NAME = instrument_plugin.so
