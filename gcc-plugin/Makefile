@@ -1,14 +1,21 @@
 # make EXPLICIT32=1
 # To be compatible with arm-none-eabi-gcc
-
 # Our cross-compiler isn't a C++-built compiler, so for EXPLICIT32, we'll also
 # use gcc rather than g++.
+
 ifneq ($(EXPLICIT32),)
 	CC = gcc
 else
-	CC = g++
+  ifneq ($(CPLUSPLUS),)
+		CC = g++
+  else
+		CC = gcc
+  endif
 endif
+
+CPLUSPLUS  ?=
 EXPLICIT32 ?=
+
 TARGET_NAME = instrument_plugin.so
 PLUGIN_SOURCE_FILES = src/instrument_plugin.cpp src/utils.cpp
 PLUGIN_OBJECT_FILES = $(patsubst %.cpp,%.o,$(PLUGIN_SOURCE_FILES))
