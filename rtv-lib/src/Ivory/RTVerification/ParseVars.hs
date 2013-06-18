@@ -14,6 +14,7 @@ module Ivory.RTVerification.ParseVars
 
 import Data.List
 import System.Directory
+import System.Environment (lookupEnv)
 import System.FilePath
 
 import Ivory.RTVerification.Types
@@ -112,11 +113,22 @@ validateVarLst vs' =
 
 --------------------------------------------------------------------------------
 
+-- | Return the path to the file containing instrumented declarations.
+--
+-- If the environment variable 'RTV_DECLS' is set, its value is
+-- returned.  Otherwise, return the file 'instrumented-decls' in
+-- the current directory.
+dataFileName :: IO FilePath
+dataFileName = do
+  file <- lookupEnv "RTV_DECLS"
+  case file of
+    Just s  -> return s
+    Nothing -> fmap (</> "instrumented-decls") getCurrentDirectory
+
 getDataFile :: IO [String]
 getDataFile = do
-  dir <- getCurrentDirectory
-  let fp = dir </> "instrumented-decls"
-  b <- doesFileExist fp
+  fp <- dataFileName
+  b  <- doesFileExist fp
   if b
     then return . lines =<< readFile fp
     else error (err fp)
