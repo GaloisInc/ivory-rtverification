@@ -153,9 +153,9 @@ toIdxs = zip (map (("id" ++) . show) [0::Int,1..])
 --------------------------------------------------------------------------------
 
 -- | Generate instrumented.c and instrumented.h
-writeCFilesForVariables :: FilePath -> IO ()
-writeCFilesForVariables outDir = do
-  tyList <- getVarList
+writeCFilesForVariables :: Bool -> FilePath -> IO ()
+writeCFilesForVariables verbose outDir = do
+  tyList <- getVarListV verbose
   let variables = toIdxs tyList
   createDirectoryIfMissing True outDir
   -- write a C file with functions for setting/getting temporal state for the

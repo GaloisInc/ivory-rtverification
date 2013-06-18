@@ -6,6 +6,8 @@
 
 module Main where
 
+import System.Environment (getArgs)
+
 import Ivory.Language
 import Ivory.Compile.C.CmdlineFrontend
 
@@ -38,9 +40,12 @@ checksMod = createModule $ properties $ do
 
 main :: IO ()
 main = do
-  writeCFilesForVariables "out"
+  args <- getArgs
+  writeCFilesForVariables (verbose args) "out" 
   runCompiler [checksMod] initialOpts { includeDir = "out", srcDir = "out" }
-
+  where
+  verbose args  = "--verbose" `elem` args
+               || "-v" `elem` args
 {- Generate the C files out/instrumented{c,h} with setters and getters for and
   int var0 and and a double var1. The following functions will be generated:
 

@@ -10,6 +10,7 @@
 
 module Ivory.RTVerification.ParseVars
   ( getVarList
+  , getVarListV
   ) where
 
 import Data.List
@@ -153,14 +154,20 @@ parseAndVerify decls =
 -- | Parse the variables from all C sources in scope using find-instrumented.sh.
 -- Generates an assignment e.g., "variables = [Int, Char]"
 getVarList :: IO [Type]
-getVarList = do
+getVarList = getVarListV False
+
+-- | Optional verbose output
+getVarListV :: Bool -> IO [Type]
+getVarListV verbose = do
   decls <- getDataFile
-  putStrLn $ "---------------------------"
-  putStrLn $ "FOUND INSTRUMENTED VARS:"
-  mapM_ putStrLn decls
-  putStrLn $ "---------------------------"
+  puts $ "---------------------------"
+  puts $ "FOUND INSTRUMENTED VARS:"
+  mapM_ puts decls
+  puts $ "---------------------------"
   case parseAndVerify decls of
     Left err  -> error $ "Parse failed: " ++ err
     Right vs' -> return (map vType vs')
+  where
+  puts = if verbose then putStrLn else const (return ())
 
 --------------------------------------------------------------------------------
