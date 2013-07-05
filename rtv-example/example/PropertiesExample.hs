@@ -9,7 +9,7 @@ module Main where
 import System.Environment (getArgs)
 
 import Ivory.Language
-import Ivory.Compile.C.CmdlineFrontend
+import Ivory.Compile.C.CmdlineFrontend hiding (verbose)
 
 import Ivory.RTVerification.GenSettersGetters
 import Ivory.RTVerification.Operators
@@ -41,7 +41,7 @@ checksMod = createModule $ properties $ do
 main :: IO ()
 main = do
   args <- getArgs
-  writeCFilesForVariables (verbose args) "out" 
+  writeCFilesForVariables (verbose args) "out"
   runCompiler [checksMod] initialOpts { includeDir = "out", srcDir = "out" }
   where
   verbose args  = "--verbose" `elem` args
