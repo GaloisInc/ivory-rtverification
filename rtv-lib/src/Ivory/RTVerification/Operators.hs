@@ -51,7 +51,7 @@ historically getters predicate = do
   let prev_res = area prevResId (Just (ival true)) :: MemArea (Stored IBool)
   let test = body $ do
         currVals <- mapM (flip call 0) getters
-        prev <- addrOf prev_res
+        let prev = addrOf prev_res
         prev' <- deref prev
         -- if the previous test failed, return false right away;
         -- otherwise, store the result of this check and return
@@ -94,7 +94,7 @@ since getters pred1 pred2 = do
   let ante_res = area anteStatusId (Just (ival false)) :: MemArea (Stored IBool)
   let test = body $ do
         currVals <- mapM (flip call 0) getters
-        ante <- addrOf ante_res
+        let ante = addrOf ante_res
         ante' <- deref ante
         -- if the first predicate is false, we can return true right away.
         -- Since it has never been true (prior to this state). If it's true, we
