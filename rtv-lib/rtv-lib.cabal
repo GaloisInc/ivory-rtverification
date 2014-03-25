@@ -13,11 +13,6 @@ flag debug-qq
   default:              False
   description:          Enable dumping of template-haskell splices
 
-flag werror
-  default:              False
-  description:          Pass -Werror to GHC.
-
-
 library
   exposed-modules:      Ivory.RTVerification.Operators
                         Ivory.RTVerification.GenChecker
@@ -41,7 +36,4 @@ library
 
   if flag(debug-qq)
     ghc-options:        -ddump-splices
-  if flag(werror)
-    ghc-options:        -Wall -Werror
-  else
-    ghc-options:        -Wall
+  ghc-options:          -Wall
