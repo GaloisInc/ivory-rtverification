@@ -6,6 +6,7 @@
 
 module Main where
 
+import Control.Monad (void)
 import System.Environment (getArgs)
 
 import Ivory.Language
@@ -42,7 +43,7 @@ main :: IO ()
 main = do
   args <- getArgs
   writeCFilesForVariables (verbose args) "out"
-  runCompiler [checksMod] initialOpts { includeDir = "out", srcDir = "out" }
+  void $ runCompiler [checksMod] initialOpts { includeDir = "out", srcDir = "out" }
   where
   verbose args  = "--verbose" `elem` args
                || "-v" `elem` args
