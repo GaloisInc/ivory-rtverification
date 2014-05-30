@@ -12,6 +12,7 @@ module Ivory.RTVerification.Operators
   , HistLen
   ) where
 
+import Control.Applicative
 import Ivory.Language
 import MonadLib (StateT, StateM, Id, get, set, runM)
 import MonadLib.Derive (Iso (..),derive_get,derive_set)
@@ -36,7 +37,7 @@ data Checkers = Checkers
 
 newtype CheckersState a = CheckersState
   { unSt :: StateT Checkers Id a
-  } deriving (Functor, Monad)
+  } deriving (Functor, Monad, Applicative)
 
 instance StateM CheckersState Checkers  where
   get = derive_get (Iso CheckersState unSt)
